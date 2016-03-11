@@ -1,4 +1,4 @@
-// Generated on 2016-03-09 using generator-angular-fullstack 3.3.0
+// Generated on 2016-03-11 using generator-angular-fullstack 3.3.0
 'use strict';
 
 module.exports = function (grunt) {
@@ -31,12 +31,13 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     yeoman: {
       // configurable paths
+      client: require('./bower.json').appPath || 'client',
       server: 'server',
       dist: 'dist'
     },
     express: {
       options: {
-        port: process.env.PORT || 9001
+        port: process.env.PORT || 9000
       },
       dev: {
         options: {
@@ -103,7 +104,11 @@ module.exports = function (grunt) {
           livereload: true,
           spawn: false //Without this option specified express won't be reloaded
         }
-      }
+      },
+      bower: {
+        files: ['bower.json'],
+        tasks: ['wiredep']
+      },
     },
 
     // Make sure code styles are up to par and there are no obvious mistakes
@@ -158,7 +163,23 @@ module.exports = function (grunt) {
       server: '.tmp'
     },
 
-    
+    // Add vendor prefixed styles
+    postcss: {
+      options: {
+        map: true,
+        processors: [
+          require('autoprefixer')({browsers: ['last 2 version']})
+        ]
+      },
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/',
+          src: '{,*/}*.css',
+          dest: '.tmp/'
+        }]
+      }
+    },
 
     // Debugging with node inspector
     'node-inspector': {
@@ -176,7 +197,7 @@ module.exports = function (grunt) {
         options: {
           nodeArgs: ['--debug-brk'],
           env: {
-            PORT: process.env.PORT || 9001
+            PORT: process.env.PORT || 9000
           },
           callback: function (nodemon) {
             nodemon.on('log', function (event) {
@@ -194,8 +215,36 @@ module.exports = function (grunt) {
       }
     },
 
+    // Automatically inject Bower components into the app and karma.conf.js
+    wiredep: {
+      options: {
+        exclude: [
+          /bootstrap.js/,
+          '/json3/',
+          '/es5-shim/'
+        ]
+      },
+      client: {
+        src: '<%= yeoman.client %>/index.html',
+        ignorePath: '<%= yeoman.client %>/',
+      },
+      test: {
+        src: './karma.conf.js',
+        devDependencies: true
+      }
+    },
 
-    
+    // Renames files for browser caching purposes
+    filerev: {
+      dist: {
+        src: [
+          '<%= yeoman.dist %>/<%= yeoman.client %>/!(bower_components){,*/}*.{js,css}',
+          '<%= yeoman.dist %>/<%= yeoman.client %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= yeoman.dist %>/<%= yeoman.client %>/assets/fonts/*'
+        ]
+      }
+    },
+
     // Reads HTML for usemin blocks to enable smart builds that automatically
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
@@ -206,8 +255,105 @@ module.exports = function (grunt) {
       }
     },
 
-    
-        // Copies remaining files to places other tasks can use
+    // Performs rewrites based on rev and the useminPrepare configuration
+    usemin: {
+      html: ['<%= yeoman.dist %>/<%= yeoman.client %>/{,!(bower_components)/**/}*.html'],
+      css: ['<%= yeoman.dist %>/<%= yeoman.client %>/!(bower_components){,*/}*.css'],
+      js: ['<%= yeoman.dist %>/<%= yeoman.client %>/!(bower_components){,*/}*.js'],
+      options: {
+        assetsDirs: [
+          '<%= yeoman.dist %>/<%= yeoman.client %>',
+          '<%= yeoman.dist %>/<%= yeoman.client %>/assets/images'
+        ],
+        // This is so we update image references in our ng-templates
+        patterns: {
+          js: [
+            [/(assets\/images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
+          ]
+        }
+      }
+    },
+
+    // The following *-min tasks produce minified files in the dist folder
+    imagemin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.client %>/assets/images',
+          src: '{,*/}*.{png,jpg,jpeg,gif,svg}',
+          dest: '<%= yeoman.dist %>/<%= yeoman.client %>/assets/images'
+        }]
+      }
+    },
+
+    // Allow the use of non-minsafe AngularJS files. Automatically makes it
+    // minsafe compatible so Uglify does not destroy the ng references
+    ngAnnotate: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/concat',
+          src: '**/*.js',
+          dest: '.tmp/concat'
+        }]
+      }
+    },
+
+    // Dynamically generate angular constant `appConfig` from
+    // `server/config/environment/shared.js`
+    ngconstant: {
+      options: {
+        name: 'gameExecutionServerApp.constants',
+        dest: '<%= yeoman.client %>/app/app.constant.js',
+        deps: [],
+        wrap: true,
+        configPath: '<%= yeoman.server %>/config/environment/shared'
+      },
+      app: {
+        constants: function() {
+          return {
+            appConfig: require('./' + grunt.config.get('ngconstant.options.configPath'))
+          };
+        }
+      }
+    },
+
+    // Package all the html partials into a single javascript payload
+    ngtemplates: {
+      options: {
+        // This should be the name of your apps angular module
+        module: 'gameExecutionServerApp',
+        htmlmin: {
+          collapseBooleanAttributes: true,
+          collapseWhitespace: true,
+          removeAttributeQuotes: true,
+          removeEmptyAttributes: true,
+          removeRedundantAttributes: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true
+        },
+        usemin: 'app/app.js'
+      },
+      main: {
+        cwd: '<%= yeoman.client %>',
+        src: ['{app,components}/**/*.html'],
+        dest: '.tmp/templates.js'
+      },
+      tmp: {
+        cwd: '.tmp',
+        src: ['{app,components}/**/*.html'],
+        dest: '.tmp/tmp-templates.js'
+      }
+    },
+
+    // Replace Google CDN references
+    cdnify: {
+      dist: {
+        html: ['<%= yeoman.dist %>/<%= yeoman.client %>/*.html']
+      }
+    },
+
+    // Copies remaining files to places other tasks can use
     copy: {
       dist: {
         files: [{
@@ -271,13 +417,13 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       pre: [
-        
+        'ngconstant'
       ],
       server: [
-        
+        'newer:babel:client',
       ],
       test: [
-        
+        'newer:babel:client',
       ],
       debug: {
         tasks: [
@@ -289,7 +435,8 @@ module.exports = function (grunt) {
         }
       },
       dist: [
-        
+        'newer:babel:client',
+        'imagemin'
       ]
     },
 
@@ -484,8 +631,8 @@ module.exports = function (grunt) {
         'concurrent:pre',
         'concurrent:server',
         'injector',
-        //'wiredep:client',
-        //'postcss',
+        'wiredep:client',
+        'postcss',
         'concurrent:debug'
       ]);
     }
@@ -495,9 +642,9 @@ module.exports = function (grunt) {
       'env:all',
       'concurrent:pre',
       'concurrent:server',
-      //'injector',
-      //'wiredep:client',
-      //'postcss',
+      'injector',
+      'wiredep:client',
+      'postcss',
       'express:dev',
       'wait',
       'open',
@@ -526,10 +673,10 @@ module.exports = function (grunt) {
         'env:all',
         'concurrent:pre',
         'concurrent:test',
-        //'injector',
-        //'postcss',
-        //'wiredep:test',
-        //'karma'
+        'injector',
+        'postcss',
+        'wiredep:test',
+        'karma'
       ]);
     }
 
@@ -553,10 +700,10 @@ module.exports = function (grunt) {
           'concurrent:pre',
           'concurrent:test',
           'injector',
-         // 'wiredep:client',
-         // 'postcss',
+          'wiredep:client',
+          'postcss',
           'express:dev',
-         // 'protractor'
+          'protractor'
         ]);
       }
     }
@@ -607,19 +754,19 @@ module.exports = function (grunt) {
     'concurrent:pre',
     'concurrent:dist',
     'injector',
-    //'wiredep:client',
+    'wiredep:client',
     'useminPrepare',
-    //'postcss',
-    //'ngtemplates',
-    //'concat',
-    //'ngAnnotate',
+    'postcss',
+    'ngtemplates',
+    'concat',
+    'ngAnnotate',
     'copy:dist',
     'babel:server',
-    //'cdnify',
-    //'cssmin',
-    //'uglify',
-    //'filerev',
-    //'usemin'
+    'cdnify',
+    'cssmin',
+    'uglify',
+    'filerev',
+    'usemin'
   ]);
 
   grunt.registerTask('default', [
