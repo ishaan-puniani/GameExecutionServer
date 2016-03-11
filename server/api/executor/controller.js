@@ -35,7 +35,7 @@ function handleError(res, statusCode) {
 export function execute(req, res) {
 var game = req.body.game,
 action = req.body.action;
-
+console.log(game,action);
 if(!cache[game]){
     cache[game] = require(game); 
 }

@@ -32,12 +32,12 @@ export default function(app) {
   app.use(bodyParser.json());
   app.use(methodOverride());
   app.use(cookieParser());
-  app.use(passport.initialize());
+  //app.use(passport.initialize());
 
   // Persist sessions with mongoStore / sequelizeStore
   // We need to enable sessions for passport-twitter because it's an
   // oauth 1.0 strategy, and Lusca depends on sessions
-  app.use(session({
+/*  app.use(session({
     secret: config.secrets.session,
     saveUninitialized: true,
     resave: false,
@@ -46,12 +46,12 @@ export default function(app) {
       db: 'game-execution-server'
     })
   }));
-
+*/
   /**
    * Lusca - express server security
    * https://github.com/krakenjs/lusca
    */
-  if ('test' !== env) {
+/*  if ('test' !== env) {
     app.use(lusca({
       csrf: {
         angular: true
@@ -65,7 +65,7 @@ export default function(app) {
       xssProtection: true
     }));
   }
-
+*/
   app.set('appPath', path.join(config.root, 'client'));
 
   if ('production' === env) {
