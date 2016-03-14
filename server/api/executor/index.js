@@ -6,7 +6,8 @@ var controller = require('./controller');
 var router = express.Router();
 
 
-//router.get('/', controller.execute);
+router.get('/', controller.getCachedGames);
 router.post('/', controller.execute);
+
 
 module.exports = router;

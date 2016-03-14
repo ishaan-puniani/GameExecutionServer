@@ -31,6 +31,9 @@ function handleError(res, statusCode) {
   };
 }
 */
+export function getCachedGames(req, res) {
+  respondWithResult(res,200)(cache);  
+}
 
 export function execute(req, res) {
 var game = req.body.game,
@@ -39,7 +42,7 @@ console.log(game,action);
 if(!cache[game]){
     cache[game] = require(game); 
 }
-
+console.log(cache[game][action]());
   respondWithResult(res,200)(cache[game][action]());  
   
 }
