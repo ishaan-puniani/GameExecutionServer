@@ -39,11 +39,12 @@ export function execute(req, res) {
 var game = req.body.game,
 action = req.body.action;
 console.log(game,action);
+console.log(req.body);
 if(!cache[game]){
     cache[game] = require(game); 
 }
-console.log(cache[game][action]());
-  respondWithResult(res,200)(cache[game][action]());  
+//console.log(cache[game][action]());
+respondWithResult(res,200)(cache[game][action](req.body));  
   
 }
 
