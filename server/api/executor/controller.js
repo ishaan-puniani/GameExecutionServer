@@ -43,7 +43,7 @@ console.log(req.body);
 if(!cache[game]){
     cache[game] = require(game); 
 }
-//console.log(cache[game][action]());
+console.log(cache[game][action]());
 respondWithResult(res,200)(cache[game][action](req.body));  
   
 }
