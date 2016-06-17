@@ -25,7 +25,8 @@
         "passport-local": "^1.0.0",
         "serve-favicon": "^2.3.0",
         "mersenne-twister": "1.0.1",
-        "Slot_Server": "git+https://github.com/ishaan-puniani/Slot_Server.git#master"
+        "Slot_Server": "git+https://github.com/ishaan-puniani/Slot_Server.git#master",
+        "JackOrBetter_Server": "git+https://github.com/ishaan-puniani/JackOrBetter_Server.git#master"
     },
     "devDependencies": {
         "autoprefixer": "^6.0.0",

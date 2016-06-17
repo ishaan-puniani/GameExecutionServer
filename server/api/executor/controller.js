@@ -2,6 +2,8 @@
 
 import _ from 'lodash';
 var Slot_Server = require('Slot_Server');
+var JackOrBetter_Server = require('JackOrBetter_Server');
+
 var cache = {}; 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -36,15 +38,15 @@ export function getCachedGames(req, res) {
 }
 
 export function execute(req, res) {
-var game = req.body.game,
-action = req.body.action;
-console.log(game,action);
-console.log(req.body);
-if(!cache[game]){
-    cache[game] = require(game); 
-}
-console.log(cache[game][action]());
-respondWithResult(res,200)(cache[game][action](req.body));  
+    var game = req.body.game,
+    action = req.body.action;
+    console.log(game,action);
+    console.log(req.body);
+    if(!cache[game]){
+        cache[game] = require(game); 
+    }
+    console.log(cache[game][action]());
+    respondWithResult(res,200)(cache[game][action](req.body));  
   
 }
 
