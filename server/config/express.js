@@ -17,10 +17,10 @@ import lusca from 'lusca';
 import config from './environment';
 import passport from 'passport';
 import session from 'express-session';
-import connectMongo from 'connect-mongo';
+/*import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
 var mongoStore = connectMongo(session);
-
+*/
 export default function(app) {
   var env = app.get('env');
 

@@ -37,16 +37,24 @@ export function getCachedGames(req, res) {
   respondWithResult(res,200)(cache);  
 }
 
-export function execute(req, res) {
+export function execute(req, res) { console.log(req.body);
     var game = req.body.game,
     action = req.body.action;
-    console.log(game,action);
+   
+    var params = {
+        bet:parseFloat(req.body.bet),
+        betLevel:req.body.betLevel ? parseFloat(req.body.betLevel):0,
+        holdedCards:req.body.holdedCards,
+        betLevelIdx : req.body.betLevelIdx ? parseFloat(req.body.betLevelIdx):0
+    };
+    console.log("GEE : execute",game,action);
     console.log(req.body);
     if(!cache[game]){
         cache[game] = require(game); 
     }
-    console.log(cache[game][action]());
-    respondWithResult(res,200)(cache[game][action](req.body));  
+    console.log(game,action,params);
+    var gameResponse = cache[game][action](params);
+    respondWithResult(res,200)(gameResponse);  
   
 }
 
