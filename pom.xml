@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>test</groupId>
+    <groupId>game</groupId>
     <artifactId>game-execution-server</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>GameExecutionServer</name>
@@ -14,8 +14,8 @@
     </scm>
 
     <properties>
-        <sonar.sources>src/main</sonar.sources>
-        <sonar.tests>src/test</sonar.tests>
+        <sonar.sources>server/**/!(*.spec|*.integration).js</sonar.sources>
+        <sonar.tests>server/**/*.{spec,integration}.js</sonar.tests>
 
         <!-- For Java
         <sonar.junit.reportsPath>reports/java/surefire-reports</sonar.junit.reportsPath>
