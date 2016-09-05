@@ -6,7 +6,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - chmod a+x runSonarQubeAnalysis.sh
+  - mvn clean install sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.login=ishaan-puniani_GameExecutionServer
 
 cache:
   directories:
