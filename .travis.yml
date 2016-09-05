@@ -6,7 +6,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - ./runSonarQubeAnalysis.sh
+  - chmod a+x ./runSonarQubeAnalysis.sh
 
 cache:
   directories:
