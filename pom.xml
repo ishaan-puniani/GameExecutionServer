@@ -14,10 +14,10 @@
     </scm>
 
     <properties>
-        <sonar.sources>server/**/!(*.spec|*.integration).js</sonar.sources>
-        <sonar.tests>server/**/*.{spec,integration}.js</sonar.tests>
+        <sonar.sources>server</sonar.sources>
+       <!-- <sonar.tests>server</sonar.tests>
 
-        <!-- For Java
+         For Java
         <sonar.junit.reportsPath>reports/java/surefire-reports</sonar.junit.reportsPath>
         <sonar.jacoco.reportPath>reports/java/jacoco.exec</sonar.jacoco.reportPath>
  -->
