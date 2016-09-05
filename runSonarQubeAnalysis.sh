@@ -6,6 +6,11 @@ set -e
 # - SONAR_HOST_URL => should point to the public URL of the SQ server (e.g. for Nemo: https://nemo.sonarqube.org)
 # - SONAR_TOKEN    => token of a user who has the "Execute Analysis" permission on the SQ server
 
+echo "Starting analysis by SonarQube..."
+	mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -B -e -V \
+		-Dsonar.host.url=$SONAR_HOST_URL \
+		-Dsonar.login=$SONAR_TOKEN
+
 # And run the analysis
 # It assumes that the project uses Maven and has a POM at the root of the repo
 if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
