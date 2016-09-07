@@ -69,6 +69,10 @@ export function execute(req, res) {
     var gameResponse = {};
     try {
         console.log("5");
+        console.log(cache);
+        console.log(cache[game]);
+        console.log(cache[game][action]);
+
         gameResponse = cache[game][action](params);
     } catch (ex) {
         console.log("6");
