@@ -9,7 +9,7 @@ var Car = function(brand, model, year) {
 Car.prototype = {
 
 	getFullName : function() {
-		return this.brand + ' ' + this.model + ' ' + 'Y: ' + this.year;
+		return this.brand + ' '+this.model + ' ' + 'Y: ' + this.year;
 	},
 
 	calculatePrice : function() {
@@ -24,7 +24,7 @@ Car.prototype = {
 
 	startEngine : function() {
 		this.engineState = 'started';
-		return 'engine started';
+		return "engine started";
 	},
 
 	stopEngine : function() {
