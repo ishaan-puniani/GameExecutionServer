@@ -64,8 +64,16 @@ export function execute(req, res) {
     console.log("3");
 
     console.log(game, action, params);
-    var gameResponse = cache[game][action](params);
+    console.log("4");
 
+    var gameResponse = {};
+    try {
+        console.log("5");
+        gameResponse = cache[game][action](params);
+    } catch (ex) {
+        console.log("6");
+        console.log(ex);
+    }
     console.log("gameResponse", gameResponse);
     respondWithResult(res, 200)(gameResponse);
 
