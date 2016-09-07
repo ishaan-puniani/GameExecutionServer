@@ -53,9 +53,16 @@ export function execute(req, res) {
     };
     console.log("GEE : execute", game, action);
     console.log(req.body);
+
+
+    console.log("1");
+    console.log(cache);
     if (!cache[game]) {
+        console.log("2");
         cache[game] = require(game);
     }
+    console.log("3");
+
     console.log(game, action, params);
     var gameResponse = cache[game][action](params);
 
