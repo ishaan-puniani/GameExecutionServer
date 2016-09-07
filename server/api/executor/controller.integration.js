@@ -6,7 +6,7 @@ import request from 'supertest';
 
 describe('Executor API:', function () {
 
-    describe('POST init /api/execute', function () {
+    /*describe('POST init /api/execute', function () {
         var things;
         beforeEach(function (done) {
             request(app)
@@ -31,7 +31,7 @@ describe('Executor API:', function () {
             expect(things).to.be.instanceOf(Object);
         });
 
-    });
+    });*/
 
     describe('POST spin /api/execute', function () {
         var things;
