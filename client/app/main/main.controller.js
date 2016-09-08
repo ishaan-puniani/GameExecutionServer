@@ -8,8 +8,8 @@ class MainController {
     this.$http = $http;
     this.awesomeThings = [];
     this.games={};
-    $http.get('/api/execute').then(response => {
-      this.games = response.data;
+    $http.get('/api/things').then(response => {
+      this.awesomeThings = response.data;
     });
   }
 
