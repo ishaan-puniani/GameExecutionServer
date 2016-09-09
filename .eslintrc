@@ -1,8 +1,16 @@
 {
     "env": {
         "browser": true,
+        "es6": true,
         "node": true,
         "mocha": true
+    },
+    "globals": {
+        "angular": true,
+        "sinon": true,
+        "expect": true,
+        "_": true,
+        "inject": true
     },
     "parserOptions": {
         "ecmaVersion": 6,
@@ -107,9 +115,9 @@
         radix: "warn",
         'require-yield': "warn",
         'rest-spread-spacing': ["warn", 'never'],
-        strict: ["warn", 'never'],
+        //strict: ["warn", 'never'],
         'unicode-bom': ["warn", 'never'],
         'use-isnan': "warn",
-        'valid-typeof': "warn",
+        'valid-typeof': "warn"
     }
 }
