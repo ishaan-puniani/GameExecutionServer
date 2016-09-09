@@ -6,7 +6,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - mvn clean install sonar:sonar -Dsonar.host.url=https://sonarqube.com -Dsonar.login=788fc4c0be6f35cde4dda4c679ad2d1d92fd32d2
+  - mvn clean install sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN
 
 cache:
   directories:

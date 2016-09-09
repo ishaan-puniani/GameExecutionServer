@@ -23,7 +23,7 @@ import config from './environment';
  */
 export default function (app) {
     var env = app.get('env');
-    console.log(config.root);
+    //console.log(config.root);
     app.set('views', config.root + '/server/views');
     app.engine('html', require('ejs').renderFile);
     app.set('view engine', 'html');
