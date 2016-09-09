@@ -7,7 +7,7 @@ describe('Main View', function() {
 
   beforeEach(function() {
     let promise = browser.get(config.baseUrl + '/');
-    page = require('./main.po');
+    page = require('./main.po.js');
     return promise;
   });
 

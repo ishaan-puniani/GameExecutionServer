@@ -9,7 +9,7 @@ describe('Signup View', function() {
   var loadPage = function() {
     browser.manage().deleteAllCookies()
     let promise = browser.get(config.baseUrl + '/signup');
-    page = require('./signup.po');
+    page = require('./signup.po.js');
     return promise;
   };
 
@@ -50,7 +50,7 @@ describe('Signup View', function() {
     it('should signup a new user, log them in, and redirecting to "/"', function() {
       page.signup(testUser);
 
-      var navbar = require('../../components/navbar/navbar.po');
+      var navbar = require('../../components/navbar/navbar.po.js');
 
       expect(browser.getCurrentUrl()).to.eventually.equal(config.baseUrl + '/');
       expect(navbar.navbarAccountGreeting.getText()).to.eventually.equal('Hello ' + testUser.name);
