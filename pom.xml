@@ -16,11 +16,11 @@
     <properties>
         <sonar.sources>src/main</sonar.sources>
         <sonar.tests>src/test</sonar.tests>
-
-        <!--   For Java
-         <sonar.junit.reportsPath>reports/java/surefire-reports</sonar.junit.reportsPath>
-         <sonar.jacoco.reportPath>reports/java/jacoco.exec</sonar.jacoco.reportPath>
-  -->
+        <sonar.exclusions>src/main/client/bower_components/**</sonar.exclusions>
+        <!--     For Java
+           <sonar.junit.reportsPath>reports/java/surefire-reports</sonar.junit.reportsPath>
+           <sonar.jacoco.reportPath>reports/java/jacoco.exec</sonar.jacoco.reportPath>
+    -->
         <!-- For JavaScript -->
         <sonar.javascript.lcov.reportPath>reports/js/lcov.dat</sonar.javascript.lcov.reportPath>
     </properties>
