@@ -38,7 +38,7 @@ export function getCachedGames(req, res) {
 }
 
 export function execute(req, res) {
-    console.log(req.body);
+    //console.log(req.body);
     var game = req.body.game,
         action = req.body.action;
 
@@ -51,34 +51,17 @@ export function execute(req, res) {
         restoredData: req.body.restoredData,
         cheat: req.body.cheat
     };
-    console.log("GEE : execute", game, action);
-    console.log(req.body);
+    //console.log("GEE : execute", game, action);
+    //console.log(req.body);
 
 
-    console.log("1");
-    console.log(cache);
     if (!cache[game]) {
-        console.log("2");
         cache[game] = require(game);
     }
-    console.log("3");
-
-    console.log(game, action, params);
-    console.log("4");
 
     var gameResponse = {};
-    try {
-        console.log("5");
-        console.log(cache);
-        console.log(cache[game]);
-        console.log(cache[game][action]);
-
-        gameResponse = cache[game][action](params);
-    } catch (ex) {
-        console.log("6");
-        console.log(ex);
-    }
-    console.log("gameResponse", gameResponse);
+    gameResponse = cache[game][action](params);
+//    console.log("gameResponse", gameResponse);
     respondWithResult(res, 200)(gameResponse);
 
 }

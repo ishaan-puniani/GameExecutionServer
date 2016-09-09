@@ -19,7 +19,6 @@ describe('Executor API:', function () {
                     if (err) {
                         return done(err);
                     }
-                    console.log("Response of init", res.body);
                     things = res.body;
                     done();
                 });
@@ -47,7 +46,6 @@ describe('Executor API:', function () {
                     if (err) {
                         return done(err);
                     }
-                    console.log("Response of spin", res.body);
                     things = res.body;
                     done();
                 });
