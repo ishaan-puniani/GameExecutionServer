@@ -3,6 +3,7 @@
 //import _ from 'lodash';
 //var Slot_Server = require('Slot_Server');
 //var JackOrBetter_Server = require('JackOrBetter_Server');
+import logger from 'logger';
 
 var cache = {};
 function respondWithResult(res, statusCode) {
@@ -38,7 +39,6 @@ export function getCachedGames(req, res) {
 }
 
 export function execute(req, res) {
-    //console.log(req.body);
     var game = req.body.game,
         action = req.body.action;
 
@@ -49,19 +49,16 @@ export function execute(req, res) {
         betLevelIdx: req.body.betLevelIdx ? parseFloat(req.body.betLevelIdx) : 0,
         isRestore: req.body.isRestore || false,
         restoredData: req.body.restoredData,
-        cheat: req.body.cheat
+        cheat: req.body.cheat,
+        roundId: req.body.roundId
     };
-    //console.log("GEE : execute", game, action);
-    //console.log(req.body);
 
+    logger.trace(game, params.roundId, "GES", "execute", action);
 
     if (!cache[game]) {
         cache[game] = require(game);
     }
-
     var gameResponse = cache[game][action](params);
-//    console.log("gameResponse", gameResponse);
     respondWithResult(res, 200)(gameResponse);
-
 }
 
