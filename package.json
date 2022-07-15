@@ -23,7 +23,8 @@
     "mersenne-twister": "1.0.1",
     "method-override": "^2.3.5",
     "morgan": "~1.6.1",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.0",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.0",
@@ -102,11 +103,14 @@
     "start": "node server",
     "test": "grunt test",
     "lint": "eslint -c .eslintrc src",
-    "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update"
+    "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update",
+    "prepublish": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "pre-commit": [
     "lint",
     "test"
   ],
-  "private": true
+  "private": true,
+  "snyk": true
 }
